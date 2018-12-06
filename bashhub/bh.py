@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 from __future__ import print_function
 import json
@@ -96,12 +96,11 @@ bh.add_param("-sys",
              default=False,
              action='store_true')
 
-bh.add_param(
-    "-i",
-    "--interactive",
-    help="Use interactive search. Allows you to select commands to run.",
-    default=False,
-    action='store_true')
+bh.add_param("-i",
+             "--interactive",
+             help="Use interactive search. Allows you to select commands to run.",
+             default=False,
+             action='store_true')
 
 bh.add_param("-dups",
              "--duplicates",
@@ -121,7 +120,7 @@ def main():
         bh.run()
     except Exception as e:
         formatted = traceback.format_exc(e)
-        print("Oops, look like an exception occured: " + str(e))
+        print("Oops, look like an exception occured:", str(e))
         sys.exit(1)
     except KeyboardInterrupt:
         # To allow Ctrl+C (^C). Print a new line to drop the prompt.
