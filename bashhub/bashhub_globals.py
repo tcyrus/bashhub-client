@@ -17,8 +17,6 @@ current_milli_time = lambda: int(round(time.time() * 1000))
 # export BH_URL='http://localhost:9000'
 BH_URL = os.getenv('BH_URL', 'https://bashhub.com')
 
-
-
 BH_HOME = '~/.bashhub' if 'HOME' not in os.environ.keys() \
         else os.environ['HOME'] + '/.bashhub'
 
@@ -49,9 +47,7 @@ def get_from_config(key):
         config = ConfigParser.ConfigParser()
         config.read(BH_HOME + '/config')
         return config.get('bashhub', key)
-    except NoSectionError as error:
-        return ""
-    except NoOptionError as error:
+    except (NoSectionError, NoOptionError) as error:
         return ""
 
 
@@ -60,6 +56,7 @@ def get_access_token():
     if not access_token:
         print("Missing access token from Bashhub Config")
     return ""
+
 
 BH_SAVE_COMMANDS = os.getenv('BH_SAVE_COMMANDS', \
     get_from_config('save_commands')).lower() in ('true', 'yes', 't', 'on', '')
