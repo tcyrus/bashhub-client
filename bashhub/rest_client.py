@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 import json
 import sys
 import requests
@@ -150,7 +150,6 @@ def delete_command(uuid):
 
 
 def patch_system(system_patch, mac):
-
     url = BH_URL + "/api/v1/system/{0}".format(mac)
 
     try:
@@ -166,7 +165,6 @@ def patch_system(system_patch, mac):
 
 
 def search(limit=None, path=None, query=None, system_name=None, unique=None):
-
     payload = dict()
 
     if limit:
@@ -195,8 +193,8 @@ def search(limit=None, path=None, query=None, system_name=None, unique=None):
             print("Permissons Issue. Run bashhub setup to re-login.")
         else:
             print(
-                "Sorry, an error occurred communicating with Bashhub. Response Code: "
-                + str(r.status_code))
+                "Sorry, an error occurred communicating with Bashhub. Response Code:",
+                str(r.status_code))
     return []
 
 
@@ -231,6 +229,6 @@ def get_status_view(process_id, start_time):
             print("Permissons Issue. Run bashhub setup to re-login.")
         else:
             print(
-                "Sorry, an error occurred communicating with Bashhub. Response Code: "
-                + str(r.status_code))
+                "Sorry, an error occurred communicating with Bashhub. Response Code:",
+                str(r.status_code))
         return None
