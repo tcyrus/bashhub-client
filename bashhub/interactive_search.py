@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Sampled from Lyle Scott scrolling curses
 """
@@ -24,8 +24,8 @@ class InteractiveSearch:
     commands = []
     screen = None
 
-    def __init__(self, commands):
 
+    def __init__(self, commands):
         self.commands = commands
         # Parse out our input
         self.outputLines = [x.__str__() for x in commands]
@@ -35,10 +35,12 @@ class InteractiveSearch:
         self.highlightLineNum = 0
         self.markedLineNums = []
 
+
     def run(self):
         # Locale set to support utf-8 characters.
         locale.setlocale(locale.LC_ALL, "")
         return curses.wrapper(self._run)
+
 
     def _run(self, screen):
         self.screen = screen
@@ -46,6 +48,7 @@ class InteractiveSearch:
         curses.start_color()
         curses.use_default_colors()
         self.screen.border(0)
+
         while True:
             self.displayScreen()
             # get user command
@@ -59,6 +62,7 @@ class InteractiveSearch:
             elif c == self.ESC_KEY or c == ord('q'):
                 sys.exit()
 
+
     def markLine(self):
         linenum = self.topLineNum + self.highlightLineNum
         if linenum in self.markedLineNums:
@@ -66,11 +70,13 @@ class InteractiveSearch:
         else:
             self.markedLineNums.append(linenum)
 
+
     def selectLine(self):
         linenum = self.topLineNum + self.highlightLineNum
         self.screen.erase()
         self.restoreScreen()
         return self.commands[linenum]
+
 
     def displayScreen(self):
         # clear screen
@@ -88,6 +94,7 @@ class InteractiveSearch:
             else:
                 self.screen.addstr(index, 0, line, curses.A_STANDOUT)
         self.screen.refresh()
+
 
     # move highlight up/down one line
     def updown(self, increment):
@@ -111,10 +118,12 @@ class InteractiveSearch:
         ) != self.nOutputLines and self.highlightLineNum != curses.LINES:
             self.highlightLineNum = nextLineNum
 
+
     def restoreScreen(self):
         curses.nocbreak()
         curses.echo()
         curses.endwin()
+
 
     # catch any weird termination situations
     def __del__(self):
