@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from bson.objectid import ObjectId
 from time import *
 import jsonpickle
@@ -32,7 +32,7 @@ def query_yes_no(question, default="yes"):
     The "answer" return value is one of "yes" or "no".
     """
     valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
-    if default == None:
+    if default is None:
         prompt = " [y/n] "
     elif default == "yes":
         prompt = " [Y/n] "
@@ -57,7 +57,7 @@ def get_new_user_information():
     email = raw_input("What's your email? ")
     username = raw_input("What username would you like? ")
     password = getpass.getpass("What password? ")
-    print("\nEmail: " + email + " Username: " + username)
+    print("\nEmail:", email, "Username:", username)
     all_good = query_yes_no("Are these correct?")
 
     if all_good:
@@ -107,7 +107,7 @@ def handle_system_information(username, password):
     # Register a new System if this one isn't recognized
     if system is None:
         hostname = socket.gethostname()
-        name_input = raw_input("What do you want to call this system? " +
+        name_input = raw_input("What do you want to call this system? "
                                "For example Home, File Server, ect. [%s]: " %
                                hostname)
 
@@ -115,7 +115,7 @@ def handle_system_information(username, password):
         system_name = rest_client.register_system(RegisterSystem(
             name, mac, hostname, __version__))
         if system_name:
-            print("Registered a new system " + name)
+            print("Registered a new system", name)
         else:
             return (None, None)
 
@@ -129,7 +129,7 @@ def handle_system_information(username, password):
     # If this system is already registered
     if system is not None:
         system_name = system.name
-        print("Welcome back! Looks like this box is already registered as " +
+        print("Welcome back! Looks like this box is already registered as",
               system.name + ".")
 
     return (access_token, system_name)
@@ -137,7 +137,6 @@ def handle_system_information(username, password):
 
 def main():
     try:
-
         ascii_art = """\
           ____            _     _           _
          |  _ \          | |   | |         | |
@@ -175,7 +174,7 @@ def main():
 
         (username, password, access_token) = get_user_information_and_login(
             username, password)
-        if access_token == None:
+        if access_token is None:
             print("\nSorry looks like logging in failed.")
             print("If you forgot your password please reset it. "
                   "https://bashhub.com/password-reset")
@@ -193,7 +192,7 @@ def main():
         (access_token, system_name) = handle_system_information(username,
                                                                 password)
 
-        if access_token == None:
+        if access_token is None:
             print("Sorry looks like getting your info failed.\
                     Exiting...")
             sys.exit(0)
@@ -205,7 +204,7 @@ def main():
 
         sys.exit(0)
 
-    except Exception, err:
+    except Exception as err:
         sys.stderr.write('Setup Error:\n%s\n' % str(err))
         traceback.print_exc()
         sys.exit(1)
