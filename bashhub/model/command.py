@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from bson.objectid import ObjectId
 from time import *
 import jsonpickle
